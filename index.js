@@ -9,7 +9,7 @@ function searchRepositories(){
   $.get(`${baseURL}/search/repositories?q=${searchTerms}`).done(function(response) {
         // debugger
         displayRepostory(response.items)
-    }).fail(displayError());
+    }).fail(displayError);
 }
 
 function displayRepostory(arr) {
@@ -27,7 +27,7 @@ function displayRepostory(arr) {
         <li>Owner's Profile Link: <a href=${el.owner.html_url}>Link</a></li>
         <li><img src=${el.owner.avatar_url} height="35" width="35" ></li>
 
-      <li><a href='#' data-owner=${el.owner.login} data-repo=${el.name} onclick="showCommits(this)">Show Commits</a></li>
+      <li><a href='#' data-owner=${el.owner.login} data-repository=${el.name} onclick="showCommits(this)">Show Commits</a></li>
     </ul>
     ----------------------
     `
@@ -39,12 +39,12 @@ function displayRepostory(arr) {
 function showCommits(el){
   let baseURL = 'https://api.github.com'
   let ownerName = el.dataset.owner;
-  let repoName = el.dataset.repo;
+  let repoName = el.dataset.repository;
      //debugger
   $.get(`${baseURL}/repos/${ownerName}/${repoName}/commits`).done(function(response) {
     //debugger
     displayCommits(response) //no response.items for this one
-  }).fail(displayError());
+  }).fail(displayError);
   // GET /repos/:owner/:repo/commits
 
   //https://api.github.com/manageyp.github.com/commits
@@ -64,8 +64,9 @@ function displayCommits(commits){
 }
 
 function displayError(){
-
+  debugger
   let divErrors = $("#errors")
+
   let ul = `
     <li>"I'm sorry, there's been an error. Please try again."</li>
   `
